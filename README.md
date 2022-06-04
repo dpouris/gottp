@@ -20,7 +20,7 @@ $ gottp post -u https://example.com/p/pjn87vi7h/post -p sample_data.json
 
 ## Installation
 
-Probably the easiest way it to build, alias and run the binary. If you want to do it another way feel free.
+Probably the easiest way is to build, alias and run the binary. If you want to do it another way feel free.
 
 ```shell
 $ go build main.go get.go
