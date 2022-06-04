@@ -33,8 +33,8 @@ $ pwd
 
 /directory/to/your/project
 ```
-```
 and add /main at the end
+
 ```shell
 -> /directory/to/your/project/main
 ```
