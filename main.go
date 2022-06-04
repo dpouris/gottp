@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
 )
 
@@ -56,12 +55,7 @@ func handlePost(pf *flag.FlagSet, p *string, f *string, u *string, h *bool) {
 		return
 	}
 
-	payload := make([]byte, 0)
-	if *p != "" {
-		payload, _ = ioutil.ReadFile(*p)
-	}
-
-	resp, err := postUrl(*u, payload)
+	resp, err := postUrl(*u, p)
 
 	if err != nil {
 		fmt.Println("Something went wrong with the request. Please make sure you're providing a valid url and or payload")

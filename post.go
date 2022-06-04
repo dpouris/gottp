@@ -2,15 +2,18 @@ package main
 
 import (
 	"bytes"
+	"io/ioutil"
 	"net/http"
 )
 
-func postUrl(url string, payload []byte) (http.Response, error) {
-	// fr := fileReader{fileSrc: "rt", byteStream: make([]byte, 20*1024)}
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(payload))
+func postUrl(url string, p *string) (http.Response, error) {
+	payload := make([]byte, 0)
+	if *p != "" {
+		payload, _ = ioutil.ReadFile(*p)
+	}
+	payload = zeroByteStripper(payload)
 
-	// endpoint := make([]byte, 30*1024)
-	// fmt.Println(fr.Read(endpoint))
+	resp, err := http.Post(url, "application/json", bytes.NewBuffer(payload))
 
 	return *resp, err
 }
