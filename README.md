@@ -2,22 +2,20 @@
 
 ## Example
 
+## **get**
 ```shell
 $ gottp get -u https://google.com -f google.html
 ```
 
+## **post**
 ```shell
-$ ls
+$ gottp post -u https://example.com/p/pjn87vi7h/post -p sample_data.json
 
-Applications                          Postman Agent
-Creative Cloud Files                  Public
-Desktop                               Sites
-Downloads                             bin
-Library                               test.py
-Movies                                go
-Music                            ~~>  google.html
-Pictures                              test.js
-Postman                               
+
+-------------------- RESPONSE --------------------
+
+{200 OK 200 HTTP/2.0 2 0 map[Access-Control-Allow-Origin:[*] Cache-Control:[private] Content-Type:[text/plain; charset=utf-8] Date:[Sat, 04 Jun 2022 20:44:51 GMT] Server:[Google Frontend] Vary:[Accept-Encoding] X-Cloud-Trace-Context:[fece1a06eab68ce6b99ae75e89741025]] 0x14000185320 -1 [] false true map[] 0x140000fe000 0x140001ea0b0}
+
 ```
 
 ## Installation
@@ -59,6 +57,19 @@ Must provide a url to fetch
   -h	Learn abou the commands
   -u string
     	Specify the url to fetch data from
+```
+```shell
+$ gottp post -h
+
+Please provide a url to post to.
+  -f string
+    	Specify the path to save the response
+  -h	Learn about the commands
+  -p string
+    	Specify a path to a JSON/XML file to use as a payload for the request
+  -u string
+    	Specify the url to post data to
+
 ```
 
 Give me a star if you like it!
