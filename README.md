@@ -27,23 +27,24 @@ Probably the easiest way it to build, alias and run the binary. If you want to d
 ```shell
 $ go build main.go get.go
 ```
-```shell
-$ vi ~/.bashrc # or .zshrc whatever shell you use
-```
 Get your current directory 
 ```shell
 $ pwd
 
-/Users/<your-username>
+/directory/to/your/project
+```
 ```
 and add /main at the end
 ```shell
--> /Users/<your-username>/main
+-> /directory/to/your/project/main
+```
+```shell
+$ vi ~/.bashrc # or .zshrc whatever shell you use
 ```
 
 On the file add the following line
 ```sh
-alias gottp="/Users/<your-username>/main"
+alias gottp="/directory/to/your/project/main"
 ```
 
 Save and exit.
