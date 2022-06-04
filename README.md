@@ -23,7 +23,7 @@ $ gottp post -u https://example.com/p/pjn87vi7h/post -p sample_data.json
 Probably the easiest way is to build, alias and run the binary. If you want to do it another way feel free.
 
 ```shell
-$ go build main.go get.go
+$ go build main.go get.go post.go fileReadWriter.go utils.go 
 ```
 Get your current directory 
 ```shell
