@@ -17,7 +17,7 @@ func main() {
 	postFlag := flag.NewFlagSet("post", flag.ExitOnError)
 	postUrlSubFlag := postFlag.String("u", "", "Specify the url to post data to")
 	postPayloadFlag := postFlag.String("p", "", "Specify a path to a JSON/XML file to use as a payload for the request")
-	postFilenameSubFlag := postFlag.String("f", "post_file.txt", "Specify the path to save the response")
+	postFilenameSubFlag := postFlag.String("f", "", "Specify the path to save the response")
 	postHelpSubFlag := postFlag.Bool("h", true, "Learn about the commands")
 
 	// If the Args are less than 2 which means that only the program was run with no arguments we want to provide the error print the available commands and exit
@@ -42,12 +42,14 @@ func main() {
 }
 
 func handlePost(pf *flag.FlagSet, p *string, f *string, u *string, h *bool) {
+	// If the -h flag is specified print the usage of each flag and exit with success code 0
 	if !(*h) {
 		pf.PrintDefaults()
 		os.Exit(0)
 		return
 	}
 
+	// If the dereferenced flag u is a zero value then give reminder, print defaults and exit with code 1
 	if *u == "" {
 		fmt.Println("Please provide a url to post to.")
 		pf.PrintDefaults()
@@ -55,27 +57,35 @@ func handlePost(pf *flag.FlagSet, p *string, f *string, u *string, h *bool) {
 		return
 	}
 
+	// Post to the url specified with the p which is a string representing the path to the file in which lays the paylaod
 	resp, err := postUrl(*u, p)
 
+	//Handle request error
 	if err != nil {
 		fmt.Println("Something went wrong with the request. Please make sure you're providing a valid url and or payload")
 		os.Exit(1)
 		return
 	}
 
-	fw := fileWriter{
-		fileDst: *f,
-	}
+	// Read the body into []byte
+	byteStream := make([]byte, 30*1024)
+	resp.Body.Read(byteStream)
+	// Remove all the unused space in the slice
+	byteStream = zeroByteStripper(byteStream)
+	resp.Body.Close()
 
+	// instantiate a new fileWriter in order to write to a file if specified by the flag
 	if *f != "" {
-		byteStream := make([]byte, 10*1024)
-		resp.Body.Read(byteStream)
-		resp.Body.Close()
+		fw := fileWriter{
+			fileDst: *f,
+		}
 		fw.Write(byteStream)
 	}
 
 	fmt.Print("\n-------------------- RESPONSE --------------------\n\n")
 	fmt.Println(resp)
+	fmt.Print("\n-------------------- BODY --------------------\n\n")
+	fmt.Println(string(byteStream))
 }
 
 // The get flag || arg handler
